@@ -1,9 +1,12 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.testng.annotations.*;
 import pageobjects.MailRuLoginPage;
 import pageobjects.MailRuMailPage;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.testng.Assert.assertEquals;
 
 public class LogIn {
 
@@ -11,40 +14,31 @@ public class LogIn {
 
     @BeforeMethod
     public void setUp() {
-        driver = new FirefoxDriver();
+        ProfilesIni profile = new ProfilesIni();
+        FirefoxProfile ffprofile = profile.getProfile("default");
+        driver = new FirefoxDriver(ffprofile);
+        driver.manage().timeouts().implicitlyWait(10, SECONDS);
     }
 
+    @AfterMethod
+    public void tearDown() {driver.quit();}
+
     @Test
-    public void login() {
+    public void login() throws InterruptedException {
 
         MailRuLoginPage mailRuLoginPage = new MailRuLoginPage(driver);
-
         mailRuLoginPage.load();
-
         MailRuMailPage mailRuMailPage = mailRuLoginPage.login();
-
-        driver.manage().timeouts().implicitlyWait(10, SECONDS);
-
-        mailRuMailPage.checkExit();
-
-        mailRuMailPage.close();
+        assertEquals(mailRuMailPage.getCheckExit(), "выход");
     }
 
     @Test
     public void logout() {
 
         MailRuLoginPage mailRuLoginPage = new MailRuLoginPage(driver);
-
         mailRuLoginPage.load();
-
         MailRuMailPage mailRuMailPage = mailRuLoginPage.login();
-
-        driver.manage().timeouts().implicitlyWait(10, SECONDS);
-
         mailRuLoginPage = mailRuMailPage.logout();
-
-        mailRuLoginPage.checkEnter();
-
-        mailRuLoginPage.close();
+        assertEquals(mailRuLoginPage.getCheckEnter(), "Вход");
     }
 }
