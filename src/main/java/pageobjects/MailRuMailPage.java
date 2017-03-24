@@ -9,9 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailRuMailPage {
-    @FindBy(how= How.ID, using="PH_logoutLink")
+    @FindBy(how = How.ID, using = "PH_logoutLink")
     private WebElement exitLink;
-    @FindBy(how= How.ID, using="PH_authLink")
+    @FindBy(how = How.ID, using = "PH_authLink")
     private WebElement enterLink;
     private WebDriver driver;
     private WebElement myDynamicElement;
@@ -21,7 +21,9 @@ public class MailRuMailPage {
         PageFactory.initElements(driver, this);
     }
 
-    public String getCheckExit() {return exitLink.getText();}
+    public String getExitValue() {
+        return exitLink.getText();
+    }
 
     public MailRuLoginPage logout() {
         exitLink.click();

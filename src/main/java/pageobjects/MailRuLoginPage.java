@@ -9,29 +9,30 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailRuLoginPage {
-
-    public static final String LOGIN = "seleniumtests10@mail.ru";
-    public static final String PASSWORD = "060788avavav";
-    @FindBy(how= How.ID, using="mailbox__login")
+    private static final String LOGIN = "seleniumtests10@mail.ru";
+    private static final String PASSWORD = "060788avavav";
+    private String URL = "http://mail.ru";
+    @FindBy(how = How.ID, using = "mailbox__login")
     private WebElement login;
-    @FindBy(how= How.ID, using="mailbox__password")
+    @FindBy(how = How.ID, using = "mailbox__password")
     private WebElement password;
-    @FindBy(how= How.ID, using="mailbox__auth__button")
+    @FindBy(how = How.ID, using = "mailbox__auth__button")
     private WebElement enterButton;
-    @FindBy(how= How.ID, using="PH_authLink")
+    @FindBy(how = How.ID, using = "PH_authLink")
     private WebElement enterLink;
-    @FindBy(how= How.ID, using="PH_logoutLink")
+    @FindBy(how = How.ID, using = "PH_logoutLink")
     private WebElement exitLink;
     private WebDriver driver;
     private WebElement myDynamicElement;
-    private String url = "http://mail.ru";
 
     public MailRuLoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void load() {driver.get(url);}
+    public void load() {
+        driver.get(URL);
+    }
 
     public MailRuMailPage login() {
         login.sendKeys(LOGIN);
@@ -41,7 +42,7 @@ public class MailRuLoginPage {
         return new MailRuMailPage(driver);
     }
 
-    public MailRuMailPage loginExtra(String login, String password) {
+    public MailRuMailPage login(String login, String password) {
         this.login.sendKeys(login);
         this.password.sendKeys(password);
         enterButton.click();
@@ -49,5 +50,7 @@ public class MailRuLoginPage {
         return new MailRuMailPage(driver);
     }
 
-    public String getCheckEnter(){return enterLink.getText();}
+    public String getEnterValue() {
+        return enterLink.getText();
+    }
 }
