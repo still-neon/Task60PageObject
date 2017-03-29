@@ -1,33 +1,28 @@
 package pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailRuMailPage {
-    @FindBy(how = How.ID, using = "PH_logoutLink")
-    private WebElement exitLink;
-    @FindBy(how = How.ID, using = "PH_authLink")
-    private WebElement enterLink;
+    By exitLink = By.id("PH_logoutLink");
+    By enterLink = By.id("PH_authLink");
     private WebDriver driver;
     private WebElement myDynamicElement;
 
     public MailRuMailPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
     public String getExitValue() {
-        return exitLink.getText();
+        return driver.findElement(exitLink).getText();
     }
 
     public MailRuLoginPage logout() {
-        exitLink.click();
-        myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOf(enterLink));
+        driver.findElement(exitLink).click();
+        myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOf(driver.findElement(enterLink)));
         return new MailRuLoginPage(driver);
     }
 }

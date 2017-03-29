@@ -36,7 +36,7 @@ public class LogIn {
     }
 
     @Test
-    public void logout() {
+    public void logout() throws InterruptedException {
         MailRuLoginPage mailRuLoginPage = new MailRuLoginPage(driver);
         mailRuLoginPage.load();
         MailRuMailPage mailRuMailPage = mailRuLoginPage.login();
