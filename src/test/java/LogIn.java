@@ -1,7 +1,5 @@
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 import pageobjects.MailRuLoginPage;
 import pageobjects.MailRuMailPage;
@@ -16,9 +14,7 @@ public class LogIn {
 
     @BeforeMethod
     public void setUp() {
-        ProfilesIni profile = new ProfilesIni();
-        FirefoxProfile ffprofile = profile.getProfile("default");
-        driver = new FirefoxDriver(ffprofile);
+        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, SECONDS);
     }
 
